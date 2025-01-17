@@ -24,6 +24,14 @@ type HyperLogLogPlus struct {
 	sparseList *compressedList
 }
 
+/*
+|   <------- idx ------->  |
+-------- -------- -------- -------- -------- -------- -------- --------
+          | <-- prime-p --> \
+          |                  \
+          |                   64-prime
+          64-p(p=10)
+*/
 // Encode a hash to be used in the sparse representation.
 func (h *HyperLogLogPlus) encodeHash(x uint64) uint32 {
 	idx := uint32(eb64(x, 64, 64-pPrime))
